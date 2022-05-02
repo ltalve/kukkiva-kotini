@@ -12,7 +12,10 @@ import Footer from "./components/Footer";
 import { Container } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
+import Backdrop from "@mui/material/Backdrop";
+import { CircularProgress } from "@mui/material";
 import { parseISO } from "date-fns";
+import format from "date-fns/format";
 
 function App() {
   const [plantList, setPlantList] = useState([]);
@@ -26,25 +29,42 @@ function App() {
     localStorage.setItem("plantList", JSON.stringify(plantList));
   };
 
-  const openPlantList = () => {
-    // console.log(`openPlantList`);
-    const tmpList = JSON.parse(localStorage.getItem("plantList"));
-    if (tmpList) {
-      const datedTmpList = tmpList.map((plant) => {
-        return {
-          ...plant,
-          lastWater: parseISO(plant.lastWater),
-          waterDeadline: parseISO(plant.waterDeadline),
-          lastNutr: parseISO(plant.lastNutr),
-          nutrDeadline: parseISO(plant.nutrDeadline),
-          lastSoil: parseISO(plant.lastSoil),
-          soilDeadline: parseISO(plant.soilDeadline),
-        };
+  const [fetchStatus, setFetchStatus] = useState({
+    error: "",
+    loading: true,
+  });
+
+  const openPlantList = async () => {
+    try {
+      const yhteys = await fetch("http://localhost:3109/api/plants");
+      if (yhteys.status === 200) {
+        console.log("Yhteys OK");
+        setPlantList(await yhteys.json());
+        setFetchStatus({
+          error: "",
+          loading: false,
+        });
+      } else {
+        let error = "";
+        switch (yhteys.status) {
+          case 404:
+            error = `Palvelimeen ei saada yhteyttä (virhekoodi ${yhteys.status})`;
+            break;
+          default:
+            error = `Palvelimella tapahtui odottamaton virhe. (virhekoodi ${yhteys.status})`;
+            break;
+        }
+
+        setFetchStatus({
+          error: error,
+          loading: false,
+        });
+      }
+    } catch (e) {
+      setFetchStatus({
+        error: "Palvelimeen ei saada yhteyttä.",
+        loading: false,
       });
-      setPlantList(datedTmpList);
-    } else {
-      // console.log("local storage list set to empty");
-      setPlantList([]);
     }
   };
 
@@ -54,9 +74,18 @@ function App() {
 
   useEffect(() => {
     savePlantList();
-  }, [plantList]);
+  }, [fetchStatus]);
 
-  if (!plantList) return <div>Ei kasveja</div>;
+  if (fetchStatus.loading) {
+    return (
+      <Backdrop open={true}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
+  }
+
+  // const s = format(parseISO(plantList[0].lastWater), "d.M.y");
+  // console.log(s);
 
   return (
     <Container

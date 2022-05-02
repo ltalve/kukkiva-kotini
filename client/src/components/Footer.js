@@ -19,7 +19,7 @@ function Footer() {
     >
       <Box>
         <Typography style={{ marginTop: "0.5rem" }}>
-          &copy; Kukkiva kotini {new Date().getFullYear()}
+          &copy; Linda Talve {new Date().getFullYear()}
         </Typography>
       </Box>
     </Box>

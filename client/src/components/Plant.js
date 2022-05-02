@@ -48,14 +48,14 @@ function Plant(props) {
         >
           <IconButton
             component={Link}
-            to={`/muokkaakasvia/${props.plant.id}`}
+            to={`/muokkaakasvia/${props.plant.plantId}`}
             color="secondary"
           >
             <EditIcon />
           </IconButton>
           <IconButton
             component={Link}
-            to={`/poistakasvi/${props.plant.id}`}
+            to={`/poistakasvi/${props.plant.plantId}`}
             color="secondary"
           >
             <DeleteIcon />
@@ -78,18 +78,18 @@ function Plant(props) {
           <Typography variant="h6" align="center" marginBottom="10px">
             Kastelu
           </Typography>
-          {props.plant.waterInterval > 0 && (
+          {props.plant.waterIntervalDays > 0 && (
             <Typography align="center">
               <>
-                Väli: {props.plant.waterInterval} päivää
+                Väli: {props.plant.waterIntervalDays} päivää
                 <br />
-                Edellinen: {format(props.plant.lastWater, "d.M.y")}
+                Edellinen: {format(new Date(props.plant.lastWater), "d.M.y")}
                 <br />
-                Seuraava: {format(props.plant.waterDeadline, "d.M.y")}
+                Seuraava: {format(new Date(props.plant.waterDeadline), "d.M.y")}
               </>
             </Typography>
           )}
-          {!props.plant.waterInterval && (
+          {!props.plant.waterIntervalDays && (
             <Typography align="center" color="#666666">
               Ei kastelutietoja
             </Typography>
@@ -100,18 +100,18 @@ function Plant(props) {
             Lannoitus
           </Typography>
 
-          {props.plant.nutrInterval > 0 && (
+          {props.plant.nutrIntervalDays > 0 && (
             <Typography align="center">
               <>
-                Väli: {props.plant.nutrInterval} päivää
+                Väli: {props.plant.nutrIntervalDays} päivää
                 <br />
-                Edellinen: {format(props.plant.lastNutr, "d.M.y")}
+                Edellinen: {format(new Date(props.plant.lastNutr), "d.M.y")}
                 <br />
-                Seuraava: {format(props.plant.nutrDeadline, "d.M.y")}
+                Seuraava: {format(new Date(props.plant.nutrDeadline), "d.M.y")}
               </>
             </Typography>
           )}
-          {!props.plant.nutrInterval && (
+          {!props.plant.nutrIntervalDays && (
             <Typography align="center" color="#666666">
               Ei lannoitustietoja
             </Typography>
@@ -121,18 +121,18 @@ function Plant(props) {
           <Typography variant="h6" align="center" marginBottom="10px">
             Multa
           </Typography>
-          {props.plant.soilInterval > 0 && (
+          {props.plant.soilIntervalMonths > 0 && (
             <Typography align="center">
               <>
-                Vaihtoväli: {props.plant.soilInterval} kuukautta
+                Vaihtoväli: {props.plant.soilIntervalMonths} kuukautta
                 <br />
-                Edellinen: {format(props.plant.lastSoil, "d.M.y")}
+                Edellinen: {format(new Date(props.plant.lastSoil), "d.M.y")}
                 <br />
-                Seuraava: {format(props.plant.soilDeadline, "d.M.y")}
+                Seuraava: {format(new Date(props.plant.soilDeadline), "d.M.y")}
               </>
             </Typography>
           )}
-          {!props.plant.soilInterval && (
+          {!props.plant.soilIntervalMonths && (
             <Typography align="center" color="#666666">
               Ei multatietoja
             </Typography>
@@ -162,10 +162,12 @@ function Plant(props) {
         marginTop="20px"
       >
         <Typography color="#666666" fontSize="0.8rem">
-          Kasvi lisätty: {props.plant.insertDate}
+          Kasvi lisätty:{" "}
+          {format(new Date(props.plant.insertDate), "d.M.y H:mm")}
         </Typography>
         <Typography color="#666666" fontSize="0.8rem">
-          Viimeksi muokattu: {props.plant.lastEditDate}
+          Viimeksi muokattu:{" "}
+          {format(new Date(props.plant.lastEditDate), "d.M.y H:mm")}
         </Typography>
       </Box>
     </Box>

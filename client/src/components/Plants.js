@@ -48,7 +48,11 @@ function Plants(props) {
         <Box width="100%" margin="auto" mt="10px" pb="10px" borderRadius="3px">
           {props.plantList.map((plant) => {
             return (
-              <Plant key={plant.id} plantList={props.plantList} plant={plant} />
+              <Plant
+                key={plant.plantId}
+                plantList={props.plantList}
+                plant={plant}
+              />
             );
           })}
         </Box>

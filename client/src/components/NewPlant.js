@@ -57,6 +57,7 @@ function NewPlant(props) {
     if (!newPlant.name) {
       errors = { ...errors, name: "Kasvin nimi on pakollinen tieto." };
     }
+    //lisää virhe, jos nimi jo käytössä
 
     if (Object.entries(errors).length > 0) {
       setErrorMsg({ ...errors });
