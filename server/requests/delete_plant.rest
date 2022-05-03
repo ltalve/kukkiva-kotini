@@ -1,0 +1,1 @@
+DELETE http://localhost:3109/api/plants/:id

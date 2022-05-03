@@ -25,7 +25,6 @@ function App() {
   };
 
   const savePlantList = () => {
-    // console.log(`savePlantList`);
     localStorage.setItem("plantList", JSON.stringify(plantList));
   };
 
@@ -83,9 +82,6 @@ function App() {
       </Backdrop>
     );
   }
-
-  // const s = format(parseISO(plantList[0].lastWater), "d.M.y");
-  // console.log(s);
 
   return (
     <Container

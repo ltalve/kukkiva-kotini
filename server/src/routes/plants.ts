@@ -44,17 +44,25 @@ plantsRouter.get("/", async (_req: express.Request, res: express.Response) => {
     });
 
     console.log(plants);
-    // res.json(
-    //   await prisma.keskustelu.findMany({
-    //     include: {
-    //       viestit: true,
-    //     },
-    //   })
-    // );
+
     res.json(plants);
   } catch (e: any) {
     res.status(500).json({ virhe: "Tapahtui virhe." });
   }
 });
+
+plantsRouter.delete(
+  "/:id",
+  async (req: express.Request, res: express.Response) => {
+    try {
+      // const queryResult = await db.query("DELETE FROM plants WHERE plantId=$1", [req.body.id]);
+      console.log(req.body.id);
+      console.log("jotain");
+      res.json({});
+    } catch (e: any) {
+      res.status(500).json({ virhe: "Tapahtui virhe." });
+    }
+  }
+);
 
 export default plantsRouter;

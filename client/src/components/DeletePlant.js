@@ -14,7 +14,7 @@ function DeletePlant(props) {
   console.log(props.plantList);
 
   const deletedPlant = props.plantList.filter((plant) => {
-    return plant.id === id;
+    return plant.plantId === Number(id);
   })[0];
 
   console.log(deletedPlant);
@@ -23,7 +23,7 @@ function DeletePlant(props) {
     e.preventDefault();
 
     let plantListHelp = props.plantList.filter((plant, idx) => {
-      return plant.id !== id;
+      return plant.plantId !== Number(id);
     });
 
     props.setPlantList([...plantListHelp]);

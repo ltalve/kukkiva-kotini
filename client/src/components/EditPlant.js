@@ -16,16 +16,16 @@ function EditPlant(props) {
   const history = useHistory();
   const { id } = useParams();
 
-  const editedPlant = props.plantList.filter((plant) => {
-    return plant.id === id;
-  })[0];
+  const editedPlant = props.plantList.filter(
+    (plant) => plant.plantId === Number(id)
+  )[0];
 
   let editedName;
-  let editedWaterInterval;
+  let editedWaterIntervalDays;
   let editedWaterDeadline;
-  let editedNutrInterval;
+  let editedNutrIntervalDays;
   let editedNutrDeadline;
-  let editedSoilInterval;
+  let editedSoilIntervalMonths;
   let editedSoilDeadline;
   let editedInfo;
 
@@ -46,7 +46,7 @@ function EditPlant(props) {
   const submitForm = (e) => {
     e.preventDefault();
 
-    editedPlant.lastEditDate = format(new Date(), "d.M.y HH:mm");
+    editedPlant.lastEditDate = format(new Date(), "d.M.y H:mm");
 
     if (editedName) {
       editedPlant.name = editedName;
@@ -56,8 +56,8 @@ function EditPlant(props) {
       editedPlant.info = editedInfo;
     }
 
-    if (editedWaterInterval) {
-      editedPlant.waterInterval = editedWaterInterval;
+    if (editedWaterIntervalDays) {
+      editedPlant.waterInterval = editedWaterIntervalDays;
       editedWaterDeadline = addDays(new Date(), editedPlant.waterInterval);
       editedPlant.waterDeadline = editedWaterDeadline;
     }
@@ -68,8 +68,8 @@ function EditPlant(props) {
       editedPlant.waterDeadline = editedWaterDeadline;
     }
 
-    if (editedNutrInterval) {
-      editedPlant.nutrInterval = editedNutrInterval;
+    if (editedNutrIntervalDays) {
+      editedPlant.nutrInterval = editedNutrIntervalDays;
       editedNutrDeadline = addDays(new Date(), editedPlant.nutrInterval);
       editedPlant.nutrDeadline = editedNutrDeadline;
     }
@@ -80,8 +80,8 @@ function EditPlant(props) {
       editedPlant.nutrDeadline = editedNutrDeadline;
     }
 
-    if (editedSoilInterval) {
-      editedPlant.soilInterval = editedSoilInterval;
+    if (editedSoilIntervalMonths) {
+      editedPlant.soilInterval = editedSoilIntervalMonths;
       editedSoilDeadline = addMonths(new Date(), editedPlant.soilInterval);
       editedPlant.soilDeadline = editedSoilDeadline;
     }
@@ -171,7 +171,7 @@ function EditPlant(props) {
 
               <Slider
                 aria-label="waterInterval"
-                defaultValue={editedPlant.waterInterval}
+                defaultValue={editedPlant.waterIntervalDays}
                 valueLabelDisplay="auto"
                 color="secondary"
                 step={1}
@@ -179,7 +179,7 @@ function EditPlant(props) {
                 min={0}
                 max={30}
                 onChange={(e) => {
-                  editedWaterInterval = e.target.value;
+                  editedWaterIntervalDays = e.target.value;
                 }}
               />
 
@@ -208,7 +208,7 @@ function EditPlant(props) {
 
               <Slider
                 aria-label="nutrInterval"
-                defaultValue={editedPlant.nutrInterval}
+                defaultValue={editedPlant.nutrIntervalDays}
                 valueLabelDisplay="auto"
                 color="secondary"
                 step={1}
@@ -216,7 +216,7 @@ function EditPlant(props) {
                 min={0}
                 max={30}
                 onChange={(e) => {
-                  editedNutrInterval = e.target.value;
+                  editedNutrIntervalDays = e.target.value;
                 }}
               />
 
@@ -247,7 +247,7 @@ function EditPlant(props) {
 
               <Slider
                 aria-label="nutrInterval"
-                defaultValue={editedPlant.soilInterval}
+                defaultValue={editedPlant.soilIntervalMonths}
                 valueLabelDisplay="auto"
                 color="secondary"
                 step={1}
@@ -255,7 +255,7 @@ function EditPlant(props) {
                 min={0}
                 max={36}
                 onChange={(e) => {
-                  editedSoilInterval = e.target.value;
+                  editedSoilIntervalMonths = e.target.value;
                 }}
               />
 
