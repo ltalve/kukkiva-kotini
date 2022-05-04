@@ -21,11 +21,11 @@ function App() {
   const [plantList, setPlantList] = useState([]);
 
   const addPlant = (plant) => {
-    setPlantList([plant, ...plantList]);
+    // setPlantList([plant, ...plantList]);
   };
 
   const savePlantList = () => {
-    localStorage.setItem("plantList", JSON.stringify(plantList));
+    // localStorage.setItem("plantList", JSON.stringify(plantList));
   };
 
   const [fetchStatus, setFetchStatus] = useState({
@@ -37,7 +37,6 @@ function App() {
     try {
       const yhteys = await fetch("http://localhost:3109/api/plants");
       if (yhteys.status === 200) {
-        console.log("Yhteys OK");
         setPlantList(await yhteys.json());
         setFetchStatus({
           error: "",

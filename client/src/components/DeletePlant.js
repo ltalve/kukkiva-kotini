@@ -1,11 +1,16 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useHistory, Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function DeletePlant(props) {
   const history = useHistory();
   const { id } = useParams();
+
+  const [fetchStatus, setFetchStatus] = useState({
+    error: "",
+  });
 
   if (!props.plantList || !props.plantList.length) {
     return null;
@@ -19,14 +24,33 @@ function DeletePlant(props) {
 
   console.log(deletedPlant);
 
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
 
-    let plantListHelp = props.plantList.filter((plant, idx) => {
-      return plant.plantId !== Number(id);
-    });
+    try {
+      const yhteys = await fetch("http://localhost:3109/api/plants/" + id, {
+        method: "DELETE",
+      });
 
-    props.setPlantList([...plantListHelp]);
+      if (yhteys.status === 200) {
+        // setPlantList(await yhteys.json());
+        history.push("/kasvit");
+      } else {
+        setFetchStatus({
+          error: yhteys.error,
+        });
+      }
+    } catch (e) {
+      setFetchStatus({
+        error: "Palvelimeen ei saada yhteyttä.",
+      });
+    }
+
+    // let plantListHelp = props.plantList.filter((plant, idx) => {
+    //   return plant.plantId !== Number(id);
+    // });
+
+    // props.setPlantList([...plantListHelp]);
 
     history.push("/kasvit");
   };
@@ -65,6 +89,8 @@ function DeletePlant(props) {
           >
             Poistetaanko kasvi {deletedPlant.name}?
           </Typography>
+
+          <Typography>{fetchStatus.error}</Typography>
 
           <Button
             type="submit"

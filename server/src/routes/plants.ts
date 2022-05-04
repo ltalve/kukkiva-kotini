@@ -55,9 +55,31 @@ plantsRouter.delete(
   "/:id",
   async (req: express.Request, res: express.Response) => {
     try {
+      const queryResult = await db.query(
+        "DELETE FROM plants WHERE plant_id=$1",
+        [req.params.id]
+      );
+      if (queryResult.rowCount === 0) {
+        res
+          .status(404)
+          .send({ error: "Poistettavaa kasvia ei ole tietokannassa." });
+      } else {
+        res.json({ success: "Poisto onnistui." });
+      }
+      console.log(JSON.stringify(queryResult));
+    } catch (e: any) {
+      console.log(e);
+      res.status(500).json({ error: "Tapahtui virhe." });
+    }
+  }
+);
+
+plantsRouter.patch(
+  "/:id",
+  async (req: express.Request, res: express.Response) => {
+    try {
       // const queryResult = await db.query("DELETE FROM plants WHERE plantId=$1", [req.body.id]);
-      console.log(req.body.id);
-      console.log("jotain");
+      console.log("ollaan muokkaamassa numeroa " + req.params.id);
       res.json({});
     } catch (e: any) {
       res.status(500).json({ virhe: "Tapahtui virhe." });
