@@ -14,5 +14,6 @@ Sovelluksen avulla käyttäjä voi tallettaa viherkasveistaan tietokantaan seura
 - muita lisätietoja
 
 Sovellus listaa syötettyjen päivämäärätietojen perusteella hoitotoimenpiteitä odottavat kasvit ja
-käyttäjä voi merkitä tehdyt hoitotoimenpiteet tehdyiksi. Ohjelma muistuttaa aina uusien määräaikojen lähestymisestä.
+käyttäjä voi merkitä hoitotoimenpiteet tehdyiksi, jolloin ohjelma siirtää uuden määräajan käyttäjän antaman ajan päähän. Ohjelma muistuttaa uusien määräaikojen lähestymisestä osiossa "Ajankohtaista".
+
 Käyttäjä voi myös muokata kasvien tietoja tai poistaa kasveja tietokannasta käyttöliittymän avulla.
