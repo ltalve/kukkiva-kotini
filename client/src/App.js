@@ -16,6 +16,7 @@ import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
 import { parseISO } from "date-fns";
 import format from "date-fns/format";
+import { getPlants } from "./services/plantService";
 
 function App() {
   const [plantList, setPlantList] = useState([]);
@@ -35,29 +36,11 @@ function App() {
 
   const openPlantList = async () => {
     try {
-      const yhteys = await fetch("http://localhost:3109/api/plants");
-      if (yhteys.status === 200) {
-        setPlantList(await yhteys.json());
-        setFetchStatus({
-          error: "",
-          loading: false,
-        });
-      } else {
-        let error = "";
-        switch (yhteys.status) {
-          case 404:
-            error = `Palvelimeen ei saada yhteyttä (virhekoodi ${yhteys.status})`;
-            break;
-          default:
-            error = `Palvelimella tapahtui odottamaton virhe. (virhekoodi ${yhteys.status})`;
-            break;
-        }
-
-        setFetchStatus({
-          error: error,
-          loading: false,
-        });
-      }
+      setPlantList(await getPlants());
+      setFetchStatus({
+        error: "",
+        loading: false,
+      });
     } catch (e) {
       setFetchStatus({
         error: "Palvelimeen ei saada yhteyttä.",

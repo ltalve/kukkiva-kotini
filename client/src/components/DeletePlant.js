@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getPlants, deletePlant } from "../services/plantService";
 
 function DeletePlant(props) {
   const history = useHistory();
@@ -22,38 +23,23 @@ function DeletePlant(props) {
     return plant.plantId === Number(id);
   })[0];
 
-  console.log(deletedPlant);
-
   const handleForm = async (e) => {
     e.preventDefault();
 
     try {
-      const yhteys = await fetch("http://localhost:3109/api/plants/" + id, {
-        method: "DELETE",
-      });
-
-      if (yhteys.status === 200) {
-        // setPlantList(await yhteys.json());
-        history.push("/kasvit");
-      } else {
-        setFetchStatus({
-          error: yhteys.error,
-        });
-      }
+      await deletePlant(id);
+      props.setPlantList(await getPlants());
     } catch (e) {
       setFetchStatus({
-        error: "Palvelimeen ei saada yhteyttä.",
+        error: `Tapahtui virhe ${e.message}`,
       });
     }
-
-    // let plantListHelp = props.plantList.filter((plant, idx) => {
-    //   return plant.plantId !== Number(id);
-    // });
-
-    // props.setPlantList([...plantListHelp]);
-
     history.push("/kasvit");
   };
+
+  if (!deletedPlant) {
+    return <></>;
+  }
 
   return (
     <Box width="50%" margin="auto">

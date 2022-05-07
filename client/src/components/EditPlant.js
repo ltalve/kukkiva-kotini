@@ -16,9 +16,13 @@ function EditPlant(props) {
   const history = useHistory();
   const { id } = useParams();
 
-  const editedPlant = props.plantList.filter(
-    (plant) => plant.plantId === Number(id)
-  )[0];
+  const editedPlant = fetch("http://localhost:3109/api/plants/" + id, {
+    method: "PATCH",
+  });
+
+  // const editedPlant = props.plantList.filter(
+  //   (plant) => plant.plantId === Number(id)
+  // )[0];
 
   let editedName;
   let editedWaterIntervalDays;

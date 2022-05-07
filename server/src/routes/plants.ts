@@ -79,7 +79,6 @@ plantsRouter.patch(
   async (req: express.Request, res: express.Response) => {
     try {
       // const queryResult = await db.query("DELETE FROM plants WHERE plantId=$1", [req.body.id]);
-      console.log("ollaan muokkaamassa numeroa " + req.params.id);
       res.json({});
     } catch (e: any) {
       res.status(500).json({ virhe: "Tapahtui virhe." });
