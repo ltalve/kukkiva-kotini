@@ -11,20 +11,24 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { fi } from "date-fns/locale";
 import { useState } from "react";
+import { updatePlant } from "../services/plantService";
+import { parseISO } from "date-fns";
 
 function EditPlant(props) {
   const history = useHistory();
   const { id } = useParams();
 
-  const editedPlant = fetch("http://localhost:3109/api/plants/" + id, {
-    method: "PATCH",
-  });
+  // const editedPlant = fetch("http://localhost:3109/api/plants/" + id, {
+  //   method: "PATCH",
+  // });
 
-  // const editedPlant = props.plantList.filter(
-  //   (plant) => plant.plantId === Number(id)
-  // )[0];
+  const editedPlant = props.plantList.filter(
+    (plant) => plant.plantId === Number(id)
+  )[0];
 
-  let editedName;
+  console.log(editedPlant);
+
+  let editedPlantName;
   let editedWaterIntervalDays;
   let editedWaterDeadline;
   let editedNutrIntervalDays;
@@ -37,9 +41,9 @@ function EditPlant(props) {
   const [tempLastNutr, setTempLastNutr] = useState(editedPlant.lastNutr);
   const [tempLastSoil, setTempLastSoil] = useState(editedPlant.lastSoil);
 
-  const editName = (e) => {
+  const editPlantName = (e) => {
     e.preventDefault();
-    editedName = e.target.value;
+    editedPlantName = e.target.value;
   };
 
   const editInfo = (e) => {
@@ -50,10 +54,8 @@ function EditPlant(props) {
   const submitForm = (e) => {
     e.preventDefault();
 
-    editedPlant.lastEditDate = format(new Date(), "d.M.y H:mm");
-
-    if (editedName) {
-      editedPlant.name = editedName;
+    if (editedPlantName) {
+      editedPlant.plantName = editedPlantName;
     }
 
     if (editedInfo) {
@@ -61,40 +63,59 @@ function EditPlant(props) {
     }
 
     if (editedWaterIntervalDays) {
-      editedPlant.waterInterval = editedWaterIntervalDays;
-      editedWaterDeadline = addDays(new Date(), editedPlant.waterInterval);
+      console.log("ennen: " + editedPlant.waterDeadline);
+      editedPlant.waterIntervalDays = editedWaterIntervalDays;
+      editedWaterDeadline = addDays(
+        new Date(editedPlant.lastWater),
+        editedWaterIntervalDays
+      ).toISOString();
       editedPlant.waterDeadline = editedWaterDeadline;
+      console.log("jälkeen: " + editedPlant.waterDeadline);
     }
 
     if (tempLastWater) {
       editedPlant.lastWater = tempLastWater;
-      editedWaterDeadline = addDays(tempLastWater, editedPlant.waterInterval);
+      editedWaterDeadline = addDays(
+        tempLastWater,
+        editedPlant.waterIntervalDays
+      );
       editedPlant.waterDeadline = editedWaterDeadline;
     }
 
     if (editedNutrIntervalDays) {
-      editedPlant.nutrInterval = editedNutrIntervalDays;
-      editedNutrDeadline = addDays(new Date(), editedPlant.nutrInterval);
+      editedPlant.nutrIntervalDays = editedNutrIntervalDays;
+      editedNutrDeadline = addDays(
+        new Date(editedPlant.lastNutr),
+        editedPlant.nutrIntervalDays
+      ).toISOString();
       editedPlant.nutrDeadline = editedNutrDeadline;
     }
 
     if (tempLastNutr) {
       editedPlant.lastNutr = tempLastNutr;
-      editedNutrDeadline = addDays(tempLastNutr, editedPlant.nutrInterval);
+      editedNutrDeadline = addDays(tempLastNutr, editedPlant.nutrIntervalDays);
       editedPlant.nutrDeadline = editedNutrDeadline;
     }
 
     if (editedSoilIntervalMonths) {
-      editedPlant.soilInterval = editedSoilIntervalMonths;
-      editedSoilDeadline = addMonths(new Date(), editedPlant.soilInterval);
+      editedPlant.soilIntervalMonths = editedSoilIntervalMonths;
+      editedSoilDeadline = addMonths(
+        new Date(editedPlant.lastSoil),
+        editedPlant.soilIntervalMonths
+      ).toISOString();
       editedPlant.soilDeadline = editedSoilDeadline;
     }
 
     if (tempLastSoil) {
       editedPlant.lastSoil = tempLastSoil;
-      editedSoilDeadline = addMonths(tempLastSoil, editedPlant.soilInterval);
+      editedSoilDeadline = addMonths(
+        tempLastSoil,
+        editedPlant.soilIntervalMonths
+      );
       editedPlant.soilDeadline = editedSoilDeadline;
     }
+
+    updatePlant(id, editedPlant);
 
     props.savePlantList();
 
@@ -144,9 +165,9 @@ function EditPlant(props) {
                 name="name"
                 variant="outlined"
                 style={{ marginBottom: 20 }}
-                defaultValue={editedPlant.name}
+                defaultValue={editedPlant.plantName}
                 fullWidth
-                onChange={editName}
+                onChange={editPlantName}
               />
 
               <Typography style={{ marginTop: "20px" }}>

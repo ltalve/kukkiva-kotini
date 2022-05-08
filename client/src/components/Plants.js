@@ -11,7 +11,7 @@ function Plants(props) {
   };
 
   // Sorting the plant list ascending with Finnish alphabet
-  props.plantList.sort((a, b) => a.name.localeCompare(b.name, "fi"));
+  props.plantList.sort((a, b) => a.plantName.localeCompare(b.plantName, "fi"));
 
   return (
     <>

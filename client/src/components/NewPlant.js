@@ -1,9 +1,7 @@
 import { Box, Typography, Button, TextField } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
-import format from "date-fns/format";
 import { addDays } from "date-fns";
 import { addMonths } from "date-fns";
 import DatePicker from "@mui/lab/DatePicker";
@@ -14,48 +12,42 @@ import { fi } from "date-fns/locale";
 function NewPlant(props) {
   const history = useHistory();
 
-  const [plantId] = useState(uuidv4());
-  const [insertDate] = useState(format(new Date(), "d.M.y HH:mm"));
-  const [lastEditDate] = useState(format(new Date(), "d.M.y HH:mm"));
-  const [name, setName] = useState();
-  const [waterInterval, setWaterInterval] = useState(null);
+  const [plantName, setPlantName] = useState();
+  const [waterIntervalDays, setWaterIntervalDays] = useState(null);
   const [lastWater, setLastWater] = useState(new Date());
-  const [nutrInterval, setNutrInterval] = useState(null);
+  const [nutrIntervalDays, setNutrIntervalDays] = useState(null);
   const [lastNutr, setLastNutr] = useState(new Date());
-  const [soilInterval, setSoilInterval] = useState(null);
+  const [soilIntervalMonths, setSoilIntervalMonths] = useState(null);
   const [lastSoil, setLastSoil] = useState(new Date());
   const [info, setInfo] = useState();
 
+  const [errorMsg, setErrorMsg] = useState({});
+
   const newPlant = {
-    id: plantId,
-    insertDate: insertDate,
-    lastEditDate: lastEditDate,
-    name: name,
-    waterInterval: waterInterval,
+    plantName: plantName,
+    waterIntervalDays: waterIntervalDays,
     lastWater: lastWater,
     waterDeadline: null,
-    nutrInterval: nutrInterval,
+    nutrIntervalDays: nutrIntervalDays,
     lastNutr: lastNutr,
     nutrDeadline: null,
-    soilInterval: soilInterval,
+    soilIntervalMonths: soilIntervalMonths,
     lastSoil: lastSoil,
     soilDeadline: null,
     info: info,
   };
-
-  const [errorMsg, setErrorMsg] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     let errors = {};
 
-    newPlant.waterDeadline = addDays(lastWater, waterInterval);
-    newPlant.nutrDeadline = addDays(lastNutr, nutrInterval);
-    newPlant.soilDeadline = addMonths(lastSoil, soilInterval);
+    newPlant.waterDeadline = addDays(lastWater, waterIntervalDays);
+    newPlant.nutrDeadline = addDays(lastNutr, nutrIntervalDays);
+    newPlant.soilDeadline = addMonths(lastSoil, soilIntervalMonths);
 
-    if (!newPlant.name) {
-      errors = { ...errors, name: "Kasvin nimi on pakollinen tieto." };
+    if (!newPlant.plantName) {
+      errors = { ...errors, plantName: "Kasvin nimi on pakollinen tieto." };
     }
     //lisää virhe, jos nimi jo käytössä
 
@@ -70,7 +62,7 @@ function NewPlant(props) {
 
   const handleName = (e) => {
     e.preventDefault();
-    setName(e.target.value);
+    setPlantName(e.target.value);
   };
 
   const handleInfo = (e) => {
@@ -158,7 +150,7 @@ function NewPlant(props) {
                 min={0}
                 max={30}
                 onChange={(e) => {
-                  setWaterInterval(e.target.value);
+                  setWaterIntervalDays(e.target.value);
                 }}
               />
 
@@ -193,7 +185,7 @@ function NewPlant(props) {
                 min={0}
                 max={30}
                 onChange={(e) => {
-                  setNutrInterval(e.target.value);
+                  setNutrIntervalDays(e.target.value);
                 }}
               />
 
@@ -228,7 +220,7 @@ function NewPlant(props) {
                 min={0}
                 max={36}
                 onChange={(e) => {
-                  setSoilInterval(e.target.value);
+                  setSoilIntervalMonths(e.target.value);
                 }}
               />
 

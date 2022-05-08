@@ -16,13 +16,14 @@ import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
 import { parseISO } from "date-fns";
 import format from "date-fns/format";
-import { getPlants } from "./services/plantService";
+import { getPlants, addPlant } from "./services/plantService";
 
 function App() {
   const [plantList, setPlantList] = useState([]);
 
-  const addPlant = (plant) => {
-    // setPlantList([plant, ...plantList]);
+  const addPlantToPlantList = async (plant) => {
+    await addPlant(plant);
+    openPlantList();
   };
 
   const savePlantList = () => {
@@ -82,7 +83,7 @@ function App() {
         <Plants plantList={plantList} />
       </Route>
       <Route path="/uusikasvi">
-        <NewPlant addPlant={addPlant} />
+        <NewPlant addPlant={addPlantToPlantList} />
       </Route>
       <Route path="/ajankohtaista">
         <>
@@ -92,7 +93,7 @@ function App() {
             <ActionNeeded
               plantList={plantList}
               setPlantList={setPlantList}
-              addPlant={addPlant}
+              addPlant={addPlantToPlantList}
               savePlantList={savePlantList}
             />
           )}
@@ -120,7 +121,7 @@ function App() {
             <ActionNeeded
               plantList={plantList}
               setPlantList={setPlantList}
-              addPlant={addPlant}
+              addPlant={addPlantToPlantList}
               savePlantList={savePlantList}
             />
           )}

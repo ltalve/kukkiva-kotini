@@ -4,8 +4,11 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
+import parseISO from "date-fns/parseISO";
 
 function Plant(props) {
+  console.log(props.plant);
+
   return (
     <Box
       style={{
@@ -37,7 +40,7 @@ function Plant(props) {
             color="#2E7D32"
             align="center"
           >
-            {props.plant.name}
+            {props.plant.plantName}
           </Typography>
         </Box>
         <Box
@@ -162,12 +165,11 @@ function Plant(props) {
         marginTop="20px"
       >
         <Typography color="#666666" fontSize="0.8rem">
-          Kasvi lisätty:{" "}
-          {format(new Date(props.plant.insertDate), "d.M.y H:mm")}
+          Kasvi lisätty: {format(new Date(props.plant.createdAt), "d.M.y H:mm")}
         </Typography>
         <Typography color="#666666" fontSize="0.8rem">
           Viimeksi muokattu:{" "}
-          {format(new Date(props.plant.lastEditDate), "d.M.y H:mm")}
+          {format(new Date(props.plant.updatedAt), "d.M.y H:mm")}
         </Typography>
       </Box>
     </Box>

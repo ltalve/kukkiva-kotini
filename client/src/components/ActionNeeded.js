@@ -16,37 +16,37 @@ function ActionNeeded(props) {
   function isThirsty(plant) {
     return (
       differenceInCalendarDays(plant.waterDeadline, dateToday) <
-        bufferToDeadline && plant.waterInterval > 0
+        bufferToDeadline && plant.waterIntervalDays > 0
     );
   }
 
   function isUnnourished(plant) {
     return (
       differenceInCalendarDays(plant.nutrDeadline, dateToday) <
-        bufferToDeadline && plant.nutrInterval > 0
+        bufferToDeadline && plant.nutrIntervalDays > 0
     );
   }
 
   function isUnsoiled(plant) {
     return (
       differenceInCalendarMonths(plant.soilDeadline, dateToday) <
-        bufferToDeadlineSoil && plant.soilInterval > 0
+        bufferToDeadlineSoil && plant.soilIntervalMonths > 0
     );
   }
 
   function updateLastWater(plantid) {
     const wateredPlant = props.plantList.filter((plant) => {
-      return plantid === plant.id;
+      return plantid === plant.plantId;
     })[0];
 
     if (wateredPlant) {
       const plantWithUpdatedLastWater = {
         ...wateredPlant,
         lastWater: new Date(),
-        waterDeadline: addDays(new Date(), wateredPlant.waterInterval),
+        waterDeadline: addDays(new Date(), wateredPlant.waterIntervalDays),
       };
       const plantListWithEditedPlantRemoved = props.plantList.filter(
-        (plant) => plant.id !== plantid
+        (plant) => plant.plantId !== plantid
       );
       props.setPlantList([
         plantWithUpdatedLastWater,
@@ -65,10 +65,10 @@ function ActionNeeded(props) {
       const plantWithUpdatedLastNutr = {
         ...nurturedPlant,
         lastNutr: new Date(),
-        nutrDeadline: addDays(new Date(), nurturedPlant.nutrInterval),
+        nutrDeadline: addDays(new Date(), nurturedPlant.nutrIntervalDays),
       };
       const plantListWithEditedPlantRemoved = props.plantList.filter(
-        (plant) => plant.id !== plantid
+        (plant) => plant.plantId !== plantid
       );
 
       props.setPlantList([
@@ -81,17 +81,17 @@ function ActionNeeded(props) {
 
   function updateLastSoil(plantid) {
     const soiledPlant = props.plantList.filter((plant) => {
-      return plantid === plant.id;
+      return plantid === plant.plantId;
     })[0];
 
     if (soiledPlant) {
       const plantWithUpdatedLastSoil = {
         ...soiledPlant,
         lastSoil: new Date(),
-        soilDeadline: addMonths(new Date(), soiledPlant.soilInterval),
+        soilDeadline: addMonths(new Date(), soiledPlant.soilIntervalMonths),
       };
       const plantListWithEditedPlantRemoved = props.plantList.filter(
-        (plant) => plant.id !== plantid
+        (plant) => plant.plantId !== plantid
       );
 
       props.setPlantList([
@@ -189,7 +189,7 @@ function ActionNeeded(props) {
               theThirsty.map((plant, idx) => (
                 <ListItem key={idx}>
                   <ListItemText
-                    primary={plant.name}
+                    primary={plant.plantName}
                     secondary={
                       <>Viimeistään {format(plant.waterDeadline, "d.M.y")}</>
                     }
@@ -203,7 +203,7 @@ function ActionNeeded(props) {
                     <IconButton
                       edge="end"
                       onClick={() => {
-                        updateLastWater(plant.id);
+                        updateLastWater(plant.plantId);
                       }}
                     >
                       {differenceInCalendarDays(
@@ -252,7 +252,7 @@ function ActionNeeded(props) {
               theUnnourished.map((plant, idx) => (
                 <ListItem key={idx}>
                   <ListItemText
-                    primary={<>{plant.name}</>}
+                    primary={<>{plant.plantName}</>}
                     secondary={
                       <>Viimeistään: {format(plant.nutrDeadline, "d.M.y")}</>
                     }
@@ -266,7 +266,7 @@ function ActionNeeded(props) {
                     <IconButton
                       edge="end"
                       onClick={() => {
-                        updateLastNutr(plant.id);
+                        updateLastNutr(plant.plantId);
                       }}
                     >
                       {differenceInCalendarDays(
@@ -314,7 +314,7 @@ function ActionNeeded(props) {
               theUnsoiled.map((plant, idx) => (
                 <ListItem key={idx}>
                   <ListItemText
-                    primary={<>{plant.name}</>}
+                    primary={<>{plant.plantName}</>}
                     secondary={
                       <>Viimeistään: {format(plant.soilDeadline, "d.M.y")}</>
                     }
@@ -328,7 +328,7 @@ function ActionNeeded(props) {
                     <IconButton
                       edge="end"
                       onClick={() => {
-                        updateLastSoil(plant.id);
+                        updateLastSoil(plant.plantId);
                       }}
                     >
                       {differenceInCalendarDays(

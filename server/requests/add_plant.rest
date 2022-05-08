@@ -1,0 +1,16 @@
+POST http://localhost:3109/api/plants/
+Content-Type: application/json
+
+{
+  "plantName": "Testikukka 2",
+  "waterIntervalDays": 5,
+  "lastWater": "2022-05-08T06:30:16+0000",
+  "waterDeadline": "2022-05-10T06:30:16+0000",
+  "nutrIntervalDays": 10,
+  "lastNutr": "2022-05-08T06:30:16+0000",
+  "nutrDeadline": "2022-05-12T06:30:16+0000",
+  "soilIntervalMonths": 24,
+  "lastSoil": "2022-01-08T06:30:16+0000",
+  "soilDeadline": "2023-08-18T06:30:16+0000",
+  "info": "Tässä tärkeää infoa testikukasta."
+}

@@ -19,10 +19,6 @@ function DeletePlant(props) {
 
   console.log(props.plantList);
 
-  const deletedPlant = props.plantList.filter((plant) => {
-    return plant.plantId === Number(id);
-  })[0];
-
   const handleForm = async (e) => {
     e.preventDefault();
 
@@ -36,6 +32,10 @@ function DeletePlant(props) {
     }
     history.push("/kasvit");
   };
+
+  const deletedPlant = props.plantList.filter((plant) => {
+    return plant.plantId === Number(id);
+  })[0];
 
   if (!deletedPlant) {
     return <></>;

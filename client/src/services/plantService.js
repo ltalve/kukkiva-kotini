@@ -26,4 +26,34 @@ const deletePlant = async (plantId) => {
   }
 };
 
-export { getPlants, deletePlant };
+const addPlant = async (plant) => {
+  try {
+    await fetch("http://localhost:3109/api/plants/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(plant),
+    });
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
+const updatePlant = async (id, plant) => {
+  try {
+    await fetch("http://localhost:3109/api/plants/" + id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(plant),
+    });
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
+export { getPlants, deletePlant, addPlant, updatePlant };
