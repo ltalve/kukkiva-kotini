@@ -12,15 +12,10 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { fi } from "date-fns/locale";
 import { useState } from "react";
 import { updatePlant } from "../services/plantService";
-import { parseISO } from "date-fns";
 
 function EditPlant(props) {
   const history = useHistory();
   const { id } = useParams();
-
-  // const editedPlant = fetch("http://localhost:3109/api/plants/" + id, {
-  //   method: "PATCH",
-  // });
 
   const editedPlant = props.plantList.filter(
     (plant) => plant.plantId === Number(id)
@@ -44,6 +39,7 @@ function EditPlant(props) {
   const editPlantName = (e) => {
     e.preventDefault();
     editedPlantName = e.target.value;
+    // editedPlant.plantName = e.target.value;
   };
 
   const editInfo = (e) => {
@@ -63,14 +59,16 @@ function EditPlant(props) {
     }
 
     if (editedWaterIntervalDays) {
-      console.log("ennen: " + editedPlant.waterDeadline);
       editedPlant.waterIntervalDays = editedWaterIntervalDays;
       editedWaterDeadline = addDays(
         new Date(editedPlant.lastWater),
         editedWaterIntervalDays
       ).toISOString();
       editedPlant.waterDeadline = editedWaterDeadline;
-      console.log("jälkeen: " + editedPlant.waterDeadline);
+    } else {
+      editedPlant.waterIntervalDays = 0;
+      editedPlant.waterDeadline = null;
+      editedPlant.lastWater = null;
     }
 
     if (tempLastWater) {
@@ -114,6 +112,10 @@ function EditPlant(props) {
       );
       editedPlant.soilDeadline = editedSoilDeadline;
     }
+
+    console.log("-----------------------------------------------");
+    console.log(editedPlant);
+    console.log("-----------------------------------------------");
 
     updatePlant(id, editedPlant);
 

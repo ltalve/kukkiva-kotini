@@ -86,9 +86,10 @@ function Plant(props) {
               <>
                 Väli: {props.plant.waterIntervalDays} päivää
                 <br />
-                Edellinen: {format(new Date(props.plant.lastWater), "d.M.y")}
+                Edellinen: {format(props.plant.lastWater, "d.M.y")}
                 <br />
-                Seuraava: {format(new Date(props.plant.waterDeadline), "d.M.y")}
+                Seuraava:
+                {format(props.plant.waterDeadline, "d.M.y")}
               </>
             </Typography>
           )}
@@ -108,9 +109,9 @@ function Plant(props) {
               <>
                 Väli: {props.plant.nutrIntervalDays} päivää
                 <br />
-                Edellinen: {format(new Date(props.plant.lastNutr), "d.M.y")}
+                Edellinen: {format(props.plant.lastNutr, "d.M.y")}
                 <br />
-                Seuraava: {format(new Date(props.plant.nutrDeadline), "d.M.y")}
+                Seuraava: {format(props.plant.nutrDeadline, "d.M.y")}
               </>
             </Typography>
           )}
@@ -129,9 +130,9 @@ function Plant(props) {
               <>
                 Vaihtoväli: {props.plant.soilIntervalMonths} kuukautta
                 <br />
-                Edellinen: {format(new Date(props.plant.lastSoil), "d.M.y")}
+                Edellinen: {format(props.plant.lastSoil, "d.M.y")}
                 <br />
-                Seuraava: {format(new Date(props.plant.soilDeadline), "d.M.y")}
+                Seuraava: {format(props.plant.soilDeadline, "d.M.y")}
               </>
             </Typography>
           )}
@@ -165,11 +166,10 @@ function Plant(props) {
         marginTop="20px"
       >
         <Typography color="#666666" fontSize="0.8rem">
-          Kasvi lisätty: {format(new Date(props.plant.createdAt), "d.M.y H:mm")}
+          Kasvi lisätty: {format(props.plant.createdAt, "d.M.y H:mm")}
         </Typography>
         <Typography color="#666666" fontSize="0.8rem">
-          Viimeksi muokattu:{" "}
-          {format(new Date(props.plant.updatedAt), "d.M.y H:mm")}
+          Viimeksi muokattu: {format(props.plant.updatedAt, "d.M.y H:mm")}
         </Typography>
       </Box>
     </Box>
