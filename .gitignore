@@ -3,3 +3,5 @@ client/node_modules
 .env
 .DS_store
 client/src/.DS_store
+client/build
+server/build

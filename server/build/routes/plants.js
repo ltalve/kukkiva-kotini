@@ -17,7 +17,6 @@ const db = require("../db");
 const plantsRouter = express_1.default.Router();
 plantsRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("wohoo!!");
         const queryResult = yield db.query("SELECT * FROM plants");
         const plants = queryResult.rows.map((result) => {
             const plant = {

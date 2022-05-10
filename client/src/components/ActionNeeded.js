@@ -21,12 +21,6 @@ function ActionNeeded(props) {
   const bufferToDeadlineSoil = 2;
 
   function isThirsty(plant) {
-    console.log(plant.waterDeadline);
-    console.log(dateToday);
-
-    console.log(differenceInCalendarDays(plant.waterDeadline, dateToday));
-    console.log(bufferToDeadline);
-    console.log(plant.waterIntervalDays);
     return (
       differenceInCalendarDays(plant.waterDeadline, dateToday) <
         bufferToDeadline && plant.waterIntervalDays > 0
@@ -120,7 +114,6 @@ function ActionNeeded(props) {
   let theThirsty = props.plantList
     .filter(isThirsty)
     .sort((a, b) => a.waterDeadline - b.waterDeadline);
-  console.log("theThirsty: ", theThirsty);
 
   let theUnnourished = props.plantList
     .filter(isUnnourished)

@@ -17,7 +17,6 @@ const pool = new Pool({
         ? false
         : { rejectUnauthorized: false },
 });
-console.log(`DB connectionString ${connectionString}`);
 module.exports = {
     query: (text, params) => __awaiter(void 0, void 0, void 0, function* () { return pool.query(text, params); }),
 };
