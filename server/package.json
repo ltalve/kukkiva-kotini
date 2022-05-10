@@ -1,5 +1,5 @@
 {
-  "name": "kukkiva-kotini",
+  "name": "kukkiva-kotini-server",
   "version": "1.0.0",
   "description": "An app for flower enthusiasts",
   "main": "index.ts",
