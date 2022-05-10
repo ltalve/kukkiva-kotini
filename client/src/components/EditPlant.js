@@ -20,8 +20,6 @@ function EditPlant(props) {
     (plant) => plant.plantId === Number(id)
   )[0];
 
-  console.log(editedPlant);
-
   const [tempPlantName, setTempPlantName] = useState(editedPlant.plantName);
   const [tempLastWater, setTempLastWater] = useState(editedPlant.lastWater);
   const [tempWaterIntervalDays, setTempWaterIntervalDays] = useState(

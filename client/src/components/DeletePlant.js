@@ -16,8 +16,6 @@ function DeletePlant(props) {
     return null;
   }
 
-  console.log(props.plantList);
-
   const handleForm = async (e) => {
     e.preventDefault();
 
