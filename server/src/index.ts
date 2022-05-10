@@ -1,4 +1,3 @@
-// import db from "./db";
 const db = require("./db");
 import express from "express";
 import path from "path";
@@ -9,14 +8,31 @@ const app: express.Application = express();
 
 app.use(express.json());
 
-const portti: number = Number(process.env.PORT) || 3109;
+const port: number = Number(process.env.PORT) || 3109;
+const CLIENT_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.CLIENT_URL
+    : process.env.CLIENT_URL_DEV;
+// app.use(express.static(path.resolve(__dirname, "public")));
 
-app.use(express.static(path.resolve(__dirname, "public")));
-
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: CLIENT_URL }));
 
 app.use("/api/plants", plantsRouter);
 
-app.listen(portti, () => {
-  console.log(`Palvelin käynnissä portissa: ${portti}`);
+const clientBuildDir = "../../client/build";
+app.use(express.static(path.resolve(__dirname, clientBuildDir)));
+app.get("/*", (_req, res) => {
+  console.log("/*");
+  res.sendFile(
+    path.resolve(__dirname, clientBuildDir, "index.html"),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
+
+app.listen(port, () => {
+  console.log(`Palvelin käynnissä portissa: ${port}`);
 });

@@ -1,6 +1,13 @@
+const SERVER_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_SERVER_URL
+    : process.env.REACT_APP_SERVER_URL_DEV;
+
+console.log(`SERVER_URL: ${SERVER_URL}`);
+
 const getPlants = async () => {
   try {
-    const response = await fetch("http://localhost:3109/api/plants");
+    const response = await fetch(`${SERVER_URL}/api/plants`);
     if (response.status === 200) {
       const plantsFromDb = (await response.json()).map((plant) => {
         return {
@@ -34,7 +41,7 @@ const getPlants = async () => {
 
 const deletePlant = async (plantId) => {
   try {
-    await fetch("http://localhost:3109/api/plants/" + plantId, {
+    await fetch(`${SERVER_URL}/api/plants/` + plantId, {
       method: "DELETE",
     });
   } catch (e) {
@@ -45,7 +52,7 @@ const deletePlant = async (plantId) => {
 
 const addPlant = async (plant) => {
   try {
-    await fetch("http://localhost:3109/api/plants/", {
+    await fetch(`${SERVER_URL}/api/plants`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +67,7 @@ const addPlant = async (plant) => {
 
 const updatePlant = async (id, plant) => {
   try {
-    await fetch("http://localhost:3109/api/plants/" + id, {
+    await fetch(`${SERVER_URL}/api/plants/` + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

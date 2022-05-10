@@ -64,6 +64,7 @@ plantsRouter.get("/", async (_req: express.Request, res: express.Response) => {
 
     res.json(plants);
   } catch (e: any) {
+    console.log(e);
     res.status(500).json({ virhe: "Tapahtui virhe." });
   }
 });
