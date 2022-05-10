@@ -1,6 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import { useHistory, Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useHistory, Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getPlants, deletePlant } from "../services/plantService";

@@ -1,12 +1,11 @@
 import { Box, Typography, Button, TextField } from "@mui/material";
 import Slider from "@mui/material/Slider";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { addDays } from "date-fns";
-import { addMonths } from "date-fns";
 import DatePicker from "@mui/lab/DatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { addDays, addMonths } from "date-fns";
 import { fi } from "date-fns/locale";
 
 function NewPlant(props) {
@@ -49,7 +48,6 @@ function NewPlant(props) {
     if (!newPlant.plantName) {
       errors = { ...errors, plantName: "Kasvin nimi on pakollinen tieto." };
     }
-    //lisää virhe, jos nimi jo käytössä
 
     if (Object.entries(errors).length > 0) {
       setErrorMsg({ ...errors });

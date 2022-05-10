@@ -1,9 +1,16 @@
-import { Box, IconButton, Typography, Badge } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  Badge,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { differenceInCalendarDays, differenceInCalendarMonths } from "date-fns";
 import format from "date-fns/format";
-import { ListItem, ListItemText, ListItemIcon } from "@mui/material";
-import { List } from "@mui/material";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 
@@ -64,7 +71,7 @@ function ActionNeeded(props) {
 
   function updateLastNutr(plantid) {
     const nurturedPlant = props.plantList.filter((plant) => {
-      return plantid === plant.id;
+      return plantid === plant.plantId;
     })[0];
 
     if (nurturedPlant) {
@@ -156,7 +163,7 @@ function ActionNeeded(props) {
           </Typography>
         ) : (
           <Typography variant="h4" style={{ marginBottom: 10 }}>
-            Kasvisi haluavat huomiota
+            Kasvisi haluavat huomiota!
           </Typography>
         )}
 

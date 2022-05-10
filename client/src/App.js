@@ -14,8 +14,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
-import { parseISO } from "date-fns";
-import format from "date-fns/format";
 import { getPlants, addPlant } from "./services/plantService";
 
 function App() {
@@ -24,10 +22,6 @@ function App() {
   const addPlantToPlantList = async (plant) => {
     await addPlant(plant);
     openPlantList();
-  };
-
-  const savePlantList = () => {
-    // localStorage.setItem("plantList", JSON.stringify(plantList));
   };
 
   const [fetchStatus, setFetchStatus] = useState({
@@ -53,10 +47,6 @@ function App() {
   useEffect(() => {
     openPlantList();
   }, []);
-
-  useEffect(() => {
-    savePlantList();
-  }, [fetchStatus]);
 
   if (fetchStatus.loading) {
     return (
@@ -94,7 +84,7 @@ function App() {
               plantList={plantList}
               setPlantList={setPlantList}
               addPlant={addPlantToPlantList}
-              savePlantList={savePlantList}
+              // savePlantList={savePlantList}
             />
           )}
         </>
@@ -104,7 +94,7 @@ function App() {
           {!plantList || !plantList.length ? null : (
             <EditPlant
               plantList={plantList}
-              savePlantList={savePlantList}
+              // savePlantList={savePlantList}
               setPlantList={setPlantList}
             />
           )}
@@ -122,7 +112,7 @@ function App() {
               plantList={plantList}
               setPlantList={setPlantList}
               addPlant={addPlantToPlantList}
-              savePlantList={savePlantList}
+              // savePlantList={savePlantList}
             />
           )}
         </>

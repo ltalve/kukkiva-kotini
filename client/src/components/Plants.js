@@ -1,4 +1,10 @@
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
 import { useHistory } from "react-router-dom";
 import Plant from "./Plant";
 
@@ -25,13 +31,18 @@ function Plants(props) {
           backgroundColor="rgba(253, 254, 254, 0.9)"
           borderRadius="3px"
         >
-          {!props.plantList ||
-            (!props.plantList.length && (
-              <Typography variant="h6" align="center" marginBottom="20px">
-                Et ole vielä tallentanut kasveja. <br />
-                Aloita sovelluksen käyttö allaolevasta napista.
-              </Typography>
-            ))}
+          {!props.plantList && (
+            <Backdrop open={true}>
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          )}
+
+          {!props.plantList.length && (
+            <Typography variant="h6" align="center" marginBottom="20px">
+              Et ole vielä tallentanut kasveja. <br />
+              Aloita sovelluksen käyttö allaolevasta napista.
+            </Typography>
+          )}
 
           {props.plantList && props.plantList.length > 0 && (
             <Typography
@@ -39,7 +50,7 @@ function Plants(props) {
               align="center"
               style={{ marginBottom: 30 }}
             >
-              Koko kasviloistoni
+              Koko kasviloistoni:
             </Typography>
           )}
         </Box>

@@ -4,11 +4,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-import parseISO from "date-fns/parseISO";
 
 function Plant(props) {
-  console.log(props.plant);
-
   return (
     <Box
       style={{
@@ -88,8 +85,7 @@ function Plant(props) {
                 <br />
                 Edellinen: {format(props.plant.lastWater, "d.M.y")}
                 <br />
-                Seuraava:
-                {format(props.plant.waterDeadline, "d.M.y")}
+                Seuraava: {format(props.plant.waterDeadline, "d.M.y")}
               </>
             </Typography>
           )}

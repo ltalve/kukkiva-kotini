@@ -2,7 +2,6 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 import { useHistory, Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Slider } from "@mui/material";
-import format from "date-fns/format";
 import SaveIcon from "@mui/icons-material/Save";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
@@ -23,103 +22,47 @@ function EditPlant(props) {
 
   console.log(editedPlant);
 
-  let editedPlantName;
-  let editedWaterIntervalDays;
-  let editedWaterDeadline;
-  let editedNutrIntervalDays;
-  let editedNutrDeadline;
-  let editedSoilIntervalMonths;
-  let editedSoilDeadline;
-  let editedInfo;
-
+  const [tempPlantName, setTempPlantName] = useState(editedPlant.plantName);
   const [tempLastWater, setTempLastWater] = useState(editedPlant.lastWater);
+  const [tempWaterIntervalDays, setTempWaterIntervalDays] = useState(
+    editedPlant.waterIntervalDays
+  );
   const [tempLastNutr, setTempLastNutr] = useState(editedPlant.lastNutr);
+  const [tempNutrIntervalDays, setTempNutrIntervalDays] = useState(
+    editedPlant.nutrIntervalDays
+  );
   const [tempLastSoil, setTempLastSoil] = useState(editedPlant.lastSoil);
-
-  const editPlantName = (e) => {
-    e.preventDefault();
-    editedPlantName = e.target.value;
-    // editedPlant.plantName = e.target.value;
-  };
-
-  const editInfo = (e) => {
-    e.preventDefault();
-    editedInfo = e.target.value;
-  };
+  const [tempSoilIntervalMonths, setTempSoilIntervalMonths] = useState(
+    editedPlant.soilIntervalMonths
+  );
+  const [tempInfo, setTempInfo] = useState(editedPlant.info);
 
   const submitForm = (e) => {
     e.preventDefault();
 
-    if (editedPlantName) {
-      editedPlant.plantName = editedPlantName;
-    }
-
-    if (editedInfo) {
-      editedPlant.info = editedInfo;
-    }
-
-    if (editedWaterIntervalDays) {
-      editedPlant.waterIntervalDays = editedWaterIntervalDays;
-      editedWaterDeadline = addDays(
-        new Date(editedPlant.lastWater),
-        editedWaterIntervalDays
-      ).toISOString();
-      editedPlant.waterDeadline = editedWaterDeadline;
-    } else {
-      editedPlant.waterIntervalDays = 0;
-      editedPlant.waterDeadline = null;
-      editedPlant.lastWater = null;
-    }
-
-    if (tempLastWater) {
-      editedPlant.lastWater = tempLastWater;
-      editedWaterDeadline = addDays(
-        tempLastWater,
-        editedPlant.waterIntervalDays
-      );
-      editedPlant.waterDeadline = editedWaterDeadline;
-    }
-
-    if (editedNutrIntervalDays) {
-      editedPlant.nutrIntervalDays = editedNutrIntervalDays;
-      editedNutrDeadline = addDays(
-        new Date(editedPlant.lastNutr),
-        editedPlant.nutrIntervalDays
-      ).toISOString();
-      editedPlant.nutrDeadline = editedNutrDeadline;
-    }
-
-    if (tempLastNutr) {
-      editedPlant.lastNutr = tempLastNutr;
-      editedNutrDeadline = addDays(tempLastNutr, editedPlant.nutrIntervalDays);
-      editedPlant.nutrDeadline = editedNutrDeadline;
-    }
-
-    if (editedSoilIntervalMonths) {
-      editedPlant.soilIntervalMonths = editedSoilIntervalMonths;
-      editedSoilDeadline = addMonths(
-        new Date(editedPlant.lastSoil),
-        editedPlant.soilIntervalMonths
-      ).toISOString();
-      editedPlant.soilDeadline = editedSoilDeadline;
-    }
-
-    if (tempLastSoil) {
-      editedPlant.lastSoil = tempLastSoil;
-      editedSoilDeadline = addMonths(
-        tempLastSoil,
-        editedPlant.soilIntervalMonths
-      );
-      editedPlant.soilDeadline = editedSoilDeadline;
-    }
-
-    console.log("-----------------------------------------------");
-    console.log(editedPlant);
-    console.log("-----------------------------------------------");
+    editedPlant.updatedAt = new Date();
+    editedPlant.plantName = tempPlantName;
+    editedPlant.lastWater = tempLastWater;
+    editedPlant.waterIntervalDays = tempWaterIntervalDays;
+    editedPlant.waterDeadline = addDays(
+      tempLastWater,
+      editedPlant.waterIntervalDays
+    );
+    editedPlant.lastNutr = tempLastNutr;
+    editedPlant.nutrIntervalDays = tempNutrIntervalDays;
+    editedPlant.nutrDeadline = addDays(
+      tempLastNutr,
+      editedPlant.nutrIntervalDays
+    );
+    editedPlant.lastSoil = tempLastSoil;
+    editedPlant.soilIntervalMonths = tempSoilIntervalMonths;
+    editedPlant.soilDeadline = addMonths(
+      tempLastSoil,
+      editedPlant.soilIntervalMonths
+    );
+    editedPlant.info = tempInfo;
 
     updatePlant(id, editedPlant);
-
-    props.savePlantList();
 
     history.push("/kasvit");
   };
@@ -169,7 +112,9 @@ function EditPlant(props) {
                 style={{ marginBottom: 20 }}
                 defaultValue={editedPlant.plantName}
                 fullWidth
-                onChange={editPlantName}
+                onChange={(e) => {
+                  setTempPlantName(e.target.value);
+                }}
               />
 
               <Typography style={{ marginTop: "20px" }}>
@@ -206,7 +151,7 @@ function EditPlant(props) {
                 min={0}
                 max={30}
                 onChange={(e) => {
-                  editedWaterIntervalDays = e.target.value;
+                  setTempWaterIntervalDays(e.target.value);
                 }}
               />
 
@@ -243,7 +188,7 @@ function EditPlant(props) {
                 min={0}
                 max={30}
                 onChange={(e) => {
-                  editedNutrIntervalDays = e.target.value;
+                  setTempNutrIntervalDays(e.target.value);
                 }}
               />
 
@@ -282,7 +227,7 @@ function EditPlant(props) {
                 min={0}
                 max={36}
                 onChange={(e) => {
-                  editedSoilIntervalMonths = e.target.value;
+                  setTempSoilIntervalMonths(e.target.value);
                 }}
               />
 
@@ -297,7 +242,9 @@ function EditPlant(props) {
                 fullWidth
                 multiline
                 style={{ marginBottom: 30 }}
-                onChange={editInfo}
+                onChange={(e) => {
+                  setTempInfo(e.target.value);
+                }}
               />
 
               <Button

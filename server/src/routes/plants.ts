@@ -1,6 +1,5 @@
 import express from "express";
 const db = require("../db");
-import sanitizeHtml from "sanitize-html";
 
 const plantsRouter: express.Router = express.Router();
 
@@ -62,8 +61,6 @@ plantsRouter.get("/", async (_req: express.Request, res: express.Response) => {
       };
       return plant;
     });
-
-    // console.log(plants);
 
     res.json(plants);
   } catch (e: any) {
@@ -152,9 +149,6 @@ plantsRouter.patch(
   "/:id",
   async (req: express.Request, res: express.Response) => {
     try {
-      console.log("PATCH: " + req.params.id);
-      // console.log(req.body);
-
       const queryResult = await db.query(
         "SELECT * FROM plants WHERE plant_id=$1",
         [req.params.id]
@@ -164,17 +158,17 @@ plantsRouter.patch(
         res.status(404).json("Kasvi ei ole tietokannassa.");
         return;
       }
+
       const plantInDb = queryResult.rows[0];
 
       const queryResult2 = await db.query(
         "UPDATE plants " +
-          "SET updated_at = $1, plant_name = $2, water_interval_days = $3," +
-          "last_water = $4, water_deadline = $5, nutr_interval_days = $6," +
-          "last_nutr = $7, nutr_deadline = $8, soil_interval_months = $9," +
-          "last_soil = $10, soil_deadline = $11, info = $12 " +
-          "WHERE plant_id = $13 RETURNING *",
+          "SET plant_name = $1, water_interval_days = $2," +
+          "last_water = $3, water_deadline = $4, nutr_interval_days = $5," +
+          "last_nutr = $6, nutr_deadline = $7, soil_interval_months = $8," +
+          "last_soil = $9, soil_deadline = $10, info = $11 " +
+          "WHERE plant_id = $12 RETURNING *",
         [
-          new Date(),
           req.body.plantName ?? plantInDb.plant_name,
           req.body.waterIntervalDays ?? plantInDb.water_interval_days,
           req.body.lastWater ?? plantInDb.last_water,
@@ -189,7 +183,6 @@ plantsRouter.patch(
           req.params.id,
         ]
       );
-      console.log(queryResult2.rows[0]);
       if (queryResult2.rowCount === 0) {
         res.status(400).send({ error: "Lisäys ei onnistunut." });
       } else {

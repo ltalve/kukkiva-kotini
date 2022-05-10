@@ -5,8 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "@fontsource/roboto";
 
-console.log(new Date().toString());
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter basename="/kukkiva-kotini">
