@@ -4,6 +4,7 @@ const SERVER_URL =
     : process.env.REACT_APP_SERVER_URL_DEV;
 
 console.log(`SERVER_URL: ${SERVER_URL}`);
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 
 const getPlants = async () => {
   try {
