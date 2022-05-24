@@ -15,7 +15,8 @@ const CLIENT_URL =
     : process.env.CLIENT_URL_DEV;
 console.log(`CLIENT_URL ${CLIENT_URL}`);
 
-app.use(cors({ origin: CLIENT_URL }));
+// app.use(cors({ origin: CLIENT_URL }));
+app.use(cors());
 
 app.use("/api/plants", plantsRouter);
 
