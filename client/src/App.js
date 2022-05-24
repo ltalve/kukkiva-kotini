@@ -84,7 +84,6 @@ function App() {
               plantList={plantList}
               setPlantList={setPlantList}
               addPlant={addPlantToPlantList}
-              // savePlantList={savePlantList}
             />
           )}
         </>
@@ -92,11 +91,7 @@ function App() {
       <Route path="/muokkaakasvia/:id">
         <>
           {!plantList || !plantList.length ? null : (
-            <EditPlant
-              plantList={plantList}
-              // savePlantList={savePlantList}
-              setPlantList={setPlantList}
-            />
+            <EditPlant plantList={plantList} setPlantList={setPlantList} />
           )}
         </>
       </Route>
@@ -112,7 +107,6 @@ function App() {
               plantList={plantList}
               setPlantList={setPlantList}
               addPlant={addPlantToPlantList}
-              // savePlantList={savePlantList}
             />
           )}
         </>

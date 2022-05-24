@@ -13,7 +13,7 @@ const CLIENT_URL =
   process.env.NODE_ENV === "production"
     ? process.env.CLIENT_URL
     : process.env.CLIENT_URL_DEV;
-// app.use(express.static(path.resolve(__dirname, "public")));
+console.log(`CLIENT_URL ${CLIENT_URL}`);
 
 app.use(cors({ origin: CLIENT_URL }));
 
@@ -22,7 +22,6 @@ app.use("/api/plants", plantsRouter);
 const clientBuildDir = "../../client/build";
 app.use(express.static(path.resolve(__dirname, clientBuildDir)));
 app.get("/*", (_req, res) => {
-  console.log("/*");
   res.sendFile(
     path.resolve(__dirname, clientBuildDir, "index.html"),
     function (err) {
