@@ -80,11 +80,7 @@ function App() {
           {!plantList || !plantList.length ? (
             <WelcomeToNew />
           ) : (
-            <ActionNeeded
-              plantList={plantList}
-              setPlantList={setPlantList}
-              addPlant={addPlantToPlantList}
-            />
+            <ActionNeeded plantList={plantList} openPlantList={openPlantList} />
           )}
         </>
       </Route>
@@ -103,11 +99,7 @@ function App() {
           {!plantList || !plantList.length ? (
             <WelcomeToNew />
           ) : (
-            <ActionNeeded
-              plantList={plantList}
-              setPlantList={setPlantList}
-              addPlant={addPlantToPlantList}
-            />
+            <ActionNeeded plantList={plantList} openPlantList={openPlantList} />
           )}
         </>
       </Route>

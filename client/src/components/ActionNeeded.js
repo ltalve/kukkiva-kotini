@@ -13,6 +13,7 @@ import { differenceInCalendarDays, differenceInCalendarMonths } from "date-fns";
 import format from "date-fns/format";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
+import { updatePlant } from "../services/plantService";
 
 function ActionNeeded(props) {
   let dateToday = new Date();
@@ -41,7 +42,7 @@ function ActionNeeded(props) {
     );
   }
 
-  function updateLastWater(plantid) {
+  async function updateLastWater(plantid) {
     const wateredPlant = props.plantList.filter((plant) => {
       return plantid === plant.plantId;
     })[0];
@@ -52,17 +53,12 @@ function ActionNeeded(props) {
         lastWater: new Date(),
         waterDeadline: addDays(new Date(), wateredPlant.waterIntervalDays),
       };
-      const plantListWithEditedPlantRemoved = props.plantList.filter(
-        (plant) => plant.plantId !== plantid
-      );
-      props.setPlantList([
-        plantWithUpdatedLastWater,
-        ...plantListWithEditedPlantRemoved,
-      ]);
+      await updatePlant(wateredPlant.plantId, plantWithUpdatedLastWater);
+      props.openPlantList();
     }
   }
 
-  function updateLastNutr(plantid) {
+  async function updateLastNutr(plantid) {
     const nurturedPlant = props.plantList.filter((plant) => {
       return plantid === plant.plantId;
     })[0];
@@ -73,18 +69,12 @@ function ActionNeeded(props) {
         lastNutr: new Date(),
         nutrDeadline: addDays(new Date(), nurturedPlant.nutrIntervalDays),
       };
-      const plantListWithEditedPlantRemoved = props.plantList.filter(
-        (plant) => plant.plantId !== plantid
-      );
-
-      props.setPlantList([
-        plantWithUpdatedLastNutr,
-        ...plantListWithEditedPlantRemoved,
-      ]);
+      await updatePlant(nurturedPlant.plantId, plantWithUpdatedLastNutr);
+      props.openPlantList();
     }
   }
 
-  function updateLastSoil(plantid) {
+  async function updateLastSoil(plantid) {
     const soiledPlant = props.plantList.filter((plant) => {
       return plantid === plant.plantId;
     })[0];
@@ -95,14 +85,8 @@ function ActionNeeded(props) {
         lastSoil: new Date(),
         soilDeadline: addMonths(new Date(), soiledPlant.soilIntervalMonths),
       };
-      const plantListWithEditedPlantRemoved = props.plantList.filter(
-        (plant) => plant.plantId !== plantid
-      );
-
-      props.setPlantList([
-        plantWithUpdatedLastSoil,
-        ...plantListWithEditedPlantRemoved,
-      ]);
+      await updatePlant(soiledPlant.plantId, plantWithUpdatedLastSoil);
+      props.openPlantList();
     }
   }
 
