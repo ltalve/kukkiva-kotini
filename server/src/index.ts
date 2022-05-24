@@ -9,13 +9,7 @@ const app: express.Application = express();
 app.use(express.json());
 
 const port: number = Number(process.env.PORT) || 3109;
-const CLIENT_URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.CLIENT_URL
-    : process.env.CLIENT_URL_DEV;
-console.log(`CLIENT_URL ${CLIENT_URL}`);
 
-// app.use(cors({ origin: CLIENT_URL }));
 app.use(cors());
 
 app.use("/api/plants", plantsRouter);
