@@ -59,7 +59,6 @@ function ActionNeeded(props) {
         plantWithUpdatedLastWater,
         ...plantListWithEditedPlantRemoved,
       ]);
-      props.savePlantList();
     }
   }
 
@@ -82,7 +81,6 @@ function ActionNeeded(props) {
         plantWithUpdatedLastNutr,
         ...plantListWithEditedPlantRemoved,
       ]);
-      props.savePlantList();
     }
   }
 
@@ -105,7 +103,6 @@ function ActionNeeded(props) {
         plantWithUpdatedLastSoil,
         ...plantListWithEditedPlantRemoved,
       ]);
-      props.savePlantList();
     }
   }
 
