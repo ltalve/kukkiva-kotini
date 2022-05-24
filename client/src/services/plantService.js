@@ -8,7 +8,12 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 
 const getPlants = async () => {
   try {
-    const response = await fetch(`${SERVER_URL}/api/plants`);
+    const response = await fetch(`${SERVER_URL}/api/plants`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (response.status === 200) {
       const plantsFromDb = (await response.json()).map((plant) => {
         return {
